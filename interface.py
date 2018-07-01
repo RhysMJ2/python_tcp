@@ -1,17 +1,11 @@
 ## Interface ##
-## v 0.9 ##
+## v 0.92 ##
 
 import tcp
 
-def inter(remote_ip, port, data=""):
+## Will return False if there is an error
+def inter(remote_ip, port, data):
     rep = 0
-    #Can be IP or domain name
-    #remote_ip = input("Host address: ")
-
-    #The port that you want to connect to
-    #port = int(input("Input Port: "))
-        
-    #data = input("Enter data: ")
     if data != "":
         s = tcp.connect(remote_ip, port)
         
@@ -36,7 +30,8 @@ def inter(remote_ip, port, data=""):
     else:
         return False
 
-ip = '192.168.1.11'
-port = 5050
-info = inter(ip, port,data=input("Enter Data: "))
-print(info)
+if __name__ == "__main__":
+    ip = input("Enter ip to connect to: ")
+    port = 5050
+    info = inter(ip, port,data=input("Enter Data: "))
+    print(info)

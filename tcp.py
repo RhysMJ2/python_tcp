@@ -37,13 +37,22 @@ def getmyip():
 
 #The default ip is your local one and port is 5050
 def bind(TCP_IP=getmyip(), TCP_PORT=5050):
-    s = create()
-    s.bind((TCP_IP, TCP_PORT))
-    print("Ready to connect on: "+TCP_IP+" on port:", TCP_PORT)
+    try:
+        s = create()
+        s.bind((TCP_IP, TCP_PORT))
+        print("Ready to connect on: "+TCP_IP+" on port:", TCP_PORT)
+    except OSError:
+        print("Cannot connect please check your PC")
+        exit()
+
+    except:
+        print("Ready to connect on: "+TCP_IP+" on port:", TCP_PORT)        
+
     s.listen(1)
     conn, addr = s.accept()
     print ('Connection address:', addr)
     return conn
+    
 
 def create():
     try:
@@ -75,6 +84,10 @@ def connect(remote_ip, port):
         except ConnectionRefusedError:
             print("Connection Refused Error (likely because other machine's port isn't open)")
             return False
+
+        except TimeoutError:
+            print("Connection timed out")
+            return False
         
     except ConnectionRefusedError:
         print("Connection Refused Error (likely because other machine's port isn't open)")
@@ -105,4 +118,4 @@ def receive(s, buff=4069):
     except ConnectionAbortedError:
         print("Error ConnectionAbortedError")
         return False
-#connect(socket.gethostbyname(socket.gethostname()), 5005)
+
