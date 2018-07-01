@@ -1,5 +1,5 @@
 # python_tcp
-## Please Be Aware that this README.md file has not been updated adn will be updated with the full release of the project. ##
+## Please Be Aware that this README.md file has not been updated and will be updated with the full release of the project. ##
 Python TCP (can be used to communicate between devices)
 
 This is my python networking project. The end goal is to be able to communicate easily between two devices, where the connecting is easy etc.
