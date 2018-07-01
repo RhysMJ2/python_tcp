@@ -1,17 +1,30 @@
-import socket
-data =0
-TCP_IP = '192.168.1.8'
-TCP_PORT = 5005
-BUFFER_SIZE = 20  # Normally 1024, but we want fast response
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind((TCP_IP, TCP_PORT))
-s.listen(1)
+## Example use of tcp v0.92 ##
+## R. M. Jones ##
+## 01/07/2017 ##
 
-conn, addr = s.accept()
-print ('Connection address:', addr)
-while data != "stop":
-    data = conn.recv(BUFFER_SIZE).decode()
-    if not data: break
-    print ("received data:", data)
-    conn.send(data.encode())  # echo
-conn.close()
+import tcp  #imoprts the module that is included with this file
+
+def server(BUFFER_SIZE, TCP_IP=tcp.getmyip(), TCP_PORT=5050):
+    
+    data =0
+    #TCP_IP = tcp.getmyip() #Gets your private ip address
+    #TCP_PORT = int(input("Enter port: ")) #The port that will be open
+    BUFFER_SIZE = 20  # Normally 1024, but we want fast response
+
+    conn = tcp.bind(TCP_IP, TCP_PORT)
+
+    
+    data = tcp.receive(conn, BUFFER_SIZE)
+    if not data:
+        conn = tcp.bind(TCP_IP, TCP_PORT)
+    else:
+        return "received data: " + data, conn
+
+
+if __name__ == "__main__":
+    info = 0
+    while info != "stop":
+        info, s = server(20)
+        print(info)
+        tcp.send(info, s)    
+        s.close()
